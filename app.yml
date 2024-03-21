@@ -1,4 +1,3 @@
-# [START app_yaml]
 runtime: nodejs18
 
 service: my-next-app
@@ -7,4 +6,3 @@ handlers:
   - url: /.*
     secure: always
     script: auto
-# [END app_yaml]
