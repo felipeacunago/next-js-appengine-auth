@@ -18,11 +18,11 @@ function Navbar() {
           <p>
             {session.user.name} {session.user.email}
           </p>
-          <img
-            src={session.user.image}
+        <img
+            src={session.user.image ?? ""}
             alt=""
             className="w-10 h-10 rounded-full cursor-pointer"
-          />
+        />
           <button
             onClick={async () => {
               await signOut({
