@@ -7,6 +7,7 @@ steps:
     args: ["run", "create-env"]
     env:
     - 'NEXTAUTH_SECRET=a_secret_key'
+    - 'NEXTAUTH_URL='https://my-next-app-dot-challengelatam-406716.ue.r.appspot.com/'
   - name: node:20.11.1
     entrypoint: npm
     args: ["run", "build"]
