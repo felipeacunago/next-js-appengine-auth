@@ -2,14 +2,17 @@ steps:
   - name: node:20.11.1
     entrypoint: npm
     args: ["install"]
+
   - name: node:20.11.1
     entrypoint: npm
     args: ["run", "create-env"]
     env:
-      - 'NEXTAUTH_SECRET=a_secret'
+    - 'NEXTAUTH_SECRET=aaaaa'
+
   - name: node:20.11.1
     entrypoint: npm
     args: ["run", "build"]
+    
   - name: "gcr.io/cloud-builders/gcloud"
     args: ["app", "deploy"]
     timeout: "1600s"
