@@ -1,20 +1,10 @@
 "use client";
 import { signIn } from "next-auth/react";
 import React, { useRef } from "react";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/app/auth";
 
 const LoginPage = () => {
-  const userName = useRef("");
-  const pass = useRef("");
 
-  const onSubmit = async () => {
-    const result = await signIn("credentials", {
-      username: userName.current,
-      password: pass.current,
-      redirect: true,
-      callbackUrl: "/",
-    });
-  };
   return (
     <>
       {Object.values(authOptions.providers).map((provider) => (
