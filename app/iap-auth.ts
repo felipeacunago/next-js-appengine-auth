@@ -3,20 +3,23 @@ import CredentialsProvider from "next-auth/providers/credentials"
 
 const {OAuth2Client} = require('google-auth-library');
 
+
 export const authOptions: AuthOptions = {
     providers: [
       CredentialsProvider({
         name: 'Credentials',
         credentials: {
           username: { label: "Username", type: "text"},
-          password: { label: "Password", type: "password" }
+          password: { label: "Passwordasddsa", type: "password" }
         },
         async authorize(credentials, req): Promise<any> {
           let projectNumber = '56723395868'
           let projectId = 'challengelatam-406716'
           let iapJwt = ''
-          if (req.headers) {
+          try {
             iapJwt = req.headers.get('x-goog-iap-jwt-assertion');
+          } catch (e) {
+            //console.error('Error reading IAP JWT: ', e);
           }
           let expectedAudience = '';
           if (projectNumber && projectId) {
@@ -36,10 +39,22 @@ export const authOptions: AuthOptions = {
               ['https://cloud.google.com/iap']
             );
             // Print out the info contained in the IAP ID token
-            console.log(ticket);
-            return ticket;
+            console.log(ticket.payload);
+            return {...ticket.payload, 'accessToken': iapJwt};
+            //return {id: "1", name: "test", email: "email"}
           }
+          const user = verify()
+          return user
         }
       })
     ],
+    callbacks: {
+      async signIn({ user, account, profile }) {
+        console.log('signIn', user, account, profile)
+        return true;
+      },
+      async redirect({ url, baseUrl }) {
+        return '/';
+      }
+    }
   }
