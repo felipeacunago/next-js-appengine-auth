@@ -5,5 +5,7 @@ export const dynamic = 'force-dynamic';
 export async function GET(
   req:  Request
 ) {
-    return new NextResponse(JSON.stringify(req.headers), { status: 200 });
+    const userEmailInHeaders = req.headers.get("x-goog-authenticated-user-email")
+    console.log(req.headers)
+    return new NextResponse(`${userEmailInHeaders}`, { status: 200 });
 }
