@@ -1,6 +1,8 @@
 import {AuthOptions} from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials"
 
+const {OAuth2Client} = require('google-auth-library');
+
 export const authOptions: AuthOptions = {
     providers: [
       CredentialsProvider({
@@ -9,18 +11,17 @@ export const authOptions: AuthOptions = {
           username: { label: "Username", type: "text"},
           password: { label: "Password", type: "password" }
         },
-        async authorize(credentials, req, headers) {
+        async authorize(credentials, req): Promise<any> {
           let projectNumber = '56723395868'
           let projectId = 'challengelatam-406716'
-          console.log(headers)
-          let iapJwt = headers.get('x-goog-iap-jwt-assertion');
-          let expectedAudience = null;
+          let iapJwt = ''
+          if (req.headers) {
+            iapJwt = req.headers.get('x-goog-iap-jwt-assertion');
+          }
+          let expectedAudience = '';
           if (projectNumber && projectId) {
             // Expected Audience for App Engine.
             expectedAudience = `/projects/${projectNumber}/apps/${projectId}`;
-          } else if (projectNumber && backendServiceId) {
-            // Expected Audience for Compute Engine
-            expectedAudience = `/projects/${projectNumber}/global/backendServices/${backendServiceId}`;
           }
 
           const oAuth2Client = new OAuth2Client();
