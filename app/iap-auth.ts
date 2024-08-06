@@ -17,7 +17,7 @@ export const authOptions: AuthOptions = {
           let projectId = 'challengelatam-406716'
           let iapJwt = ''
           try {
-            iapJwt = req.headers.get('x-goog-iap-jwt-assertion');
+            iapJwt = req.headers?.get('x-goog-iap-jwt-assertion');
           } catch (e) {
             //console.error('Error reading IAP JWT: ', e);
           }
